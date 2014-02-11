@@ -1,6 +1,5 @@
 """Geo-related routines"""
 import numpy as np
-import matplotlib.ticker as mticker
 
 def latlen(lat):
     """Return the lenght of one degree of latitude at the given latitude [deg] in metres"""
@@ -402,28 +401,28 @@ def lonlatbounds(lons,lats,mode=4):
     """
     delon = lons[1]-lons[0]
     delat = lats[1]-lats[0]
-    if (boundarymode == 1) : # extend existing grid points to the southeast
+    if (mode == 1) : # extend existing grid points to the southeast
         lonbounds=np.zeros(len(lons)+1)
         latbounds=np.zeros(len(lats)+1)
         lonbounds[0:-1] = lons
         latbounds[0:-1] = lats
         lonbounds[-1] = lonbounds[-2]+delon
         latbounds[-1] = latbounds[-2]+delat
-    elif (boundarymode == 2) : # extend existing grid points to the northwest
+    elif (mode == 2) : # extend existing grid points to the northwest
         lonbounds=np.zeros(len(lons)+1)
         latbounds=np.zeros(len(lats)+1)
         lonbounds[1:] = lons
         latbounds[1:] = lats
         lonbounds[0] = lonbounds[1]-delon
         latbounds[0] = latbounds[1]-delat
-    elif (boundarymode == 3) : # extend existing grid points to the southwest
+    elif (mode == 3) : # extend existing grid points to the southwest
         lonbounds=np.zeros(len(lons)+1)
         lonbounds[1:] = lons
         lonbounds[0] = lonbounds[1]-delon
         latbounds=np.zeros(len(lats)+1)
         latbounds[0:-1] = lats
         latbounds[-1] = latbounds[-2]+delat
-    elif (boundarymode == 4) : # use existing grid points as midpoints of their respective grid boxes
+    elif (mode == 4) : # use existing grid points as midpoints of their respective grid boxes
         lonbounds=np.zeros(len(lons)+1)
         latbounds=np.zeros(len(lats)+1)
         lonbounds[0:-1] = lons - 0.5*delon
@@ -434,10 +433,24 @@ def lonlatbounds(lons,lats,mode=4):
     return (latbounds,lonbounds)
 
 
+def lat2str(deg):
+    degrees = np.sign(deg) * np.floor(np.abs(deg))
+    minutes = np.sign(deg) * (np.abs(deg) - np.abs(degrees)) * 60
+    direction = ['S','N'][deg<0]
+    if minutes == 0:
+        return u"{:.0f}\N{DEGREE SIGN}{}".format(np.abs(degrees),direction)
+    else:
+        return u"{:.0f}\N{DEGREE SIGN}{:.0f}'{}".format(np.abs(degrees),np.abs(minutes),direction)
 
-def _lontick_func(c,pos):
-    c180 = remap_lon_180(c)
-    return u'{}{}{}'.format(num2str(c180 if c180 >= 0 else -c180),u'\u00b0',['E','W'][c180<0])
-lontick_formatter = mticker.FuncFormatter(_lontick_func)
-lattick_formatter = mticker.FuncFormatter(lambda c,pos : u'{}{}{}'.format(num2str(c if c >= 0 else -c),u'\u00b0',['N','S'][c<0]))
+
+def lon2str(deg,remap180=False):
+    if remap180:
+        deg = remap_lon_180(deg)
+    degrees = np.sign(deg) * np.floor(np.abs(deg))
+    minutes = np.sign(deg) * (np.abs(deg) - np.abs(degrees)) * 60
+    direction = ['W','E'][deg>0]
+    if minutes == 0:
+        return u"{:.0f}\N{DEGREE SIGN}{}".format(np.abs(degrees),direction)
+    else:
+        return u"{:.0f}\N{DEGREE SIGN}{:.0f}\'{}".format(np.abs(degrees),np.abs(minutes),direction)
 
