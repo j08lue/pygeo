@@ -58,7 +58,6 @@ def spherical2cartesian(lon,lat):
     return x,y,z
 
 
-
 def arclength(lon1, lat1, lon2, lat2):
     """Returns arc length [radians] between two points [dec deg]
 
@@ -84,7 +83,6 @@ def arclength(lon1, lat1, lon2, lat2):
     a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
     b = 2. * np.arcsin(np.sqrt(a))
     return b
-
 
 
 def haversine(lon1, lat1, lon2, lat2):
