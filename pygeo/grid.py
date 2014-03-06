@@ -3,28 +3,25 @@ import numpy as np
 from . import geo
 
 
-def addcyclic(arr,axis=-1):
-    """Like Basemap.addcyclic, but working for ND arrays
-    
-    Parameters
-    ----------
-    a : ndarray or iterable of such
-        arrays to add cyclic longitudes to
-    axis : int
-        axis along which to add the cyclic longitude
-
-    Returns
-    -------
-    A copy of the array(s) in `a` with the first column/row added to the end
+def addcyclic(*arr,**axiskwarg):
     """
+    ``arrout, lonsout = addcyclic(arrin,lonsin,axis=-1)``
+    adds cyclic (wraparound) points in longitude to one or several arrays, 
+    (e.g. ``arrin`` and ``lonsin``),
+    where ``axis`` sets the dimension longitude is in (optional, default: right-most).
+    """
+    # get axis keyword argument (default: -1)
+    axis = axiskwarg.get('axis',-1)
+    # define function for a single grid array
     def _addcyclic(a):
         aT = np.swapaxes(a,0,axis)
         idx = np.append(np.arange(aT.shape[0]),0)
         return np.swapaxes(aT[idx],axis,0)
-    if isinstance(arr,list) or isinstance(arr,tuple):
-        return map(_addcyclic,arr)
+    # process array(s)
+    if len(arr) == 1:
+        return _addcyclic(arr[0])
     else:
-        return _addcyclic(arr)
+        return map(_addcyclic,arr)
 
 
 def regular_grid(spacing,lon0=-180,centerlon=0,addcyclic=False):
