@@ -31,16 +31,20 @@ def regular_grid(spacing,lon0=-180,centerlon=0,addcyclic=False):
     Parameters
     ----------
     lon0 : float
-        western-most longitude for the grid (default: 180)
+        western-most longitude for the grid (default: -180)
         the longitude returned runs from lon0 to lon0+360
     centerlon : float, optional
         longitude where to center the grid
         if centerlon is given, lon0 is set to centerlon-180
+
+    Returns
+    -------
+    lons, lats
     """
-    if centerlon:
+    if centerlon != 0:
         lon0 = centerlon-180
     return (np.arange(lon0,lon0+360+(spacing*addcyclic),spacing),
-            np.arange(-90-spacing/2.,90+spacing/2.+1e-8,spacing)[1:-1])
+            np.arange(-90+spacing/2.,90,spacing))
     
 
 def binary_search_grid(gridlon,gridlat,px,py,returndist=False):
