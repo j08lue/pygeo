@@ -1,6 +1,6 @@
 """Regrid data from one grid to another. Useful e.g. for plotting data that is on an irregular grid"""
 import numpy as np
-from matplotlib import delaunay
+from matplotlib.tri import Triangulation
 from mpl_toolkits.basemap import Basemap
 
 def regrid_lonlat(lon,lat,data,targetlon,targetlat,mask=None,m=None,lon0=None,returnxy=False):
@@ -60,7 +60,7 @@ def regrid_lonlat(lon,lat,data,targetlon,targetlat,mask=None,m=None,lon0=None,re
     xi,yi = m(targetlon,targetlat)
     
     # interpolate the data
-    tri = delaunay.Triangulation(x,y)
+    tri = Triangulation(x,y)
     interp = tri.nn_interpolator(data[mask])
 
     if returnxy:
