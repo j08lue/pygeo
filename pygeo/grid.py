@@ -3,7 +3,7 @@ import numpy as np
 from . import geo
 
 
-def addcyclic(*arr,**axiskwarg):
+def addcyclic(*arr, **axiskwarg):
     """
     ``arrout, lonsout = addcyclic(arrin,lonsin,axis=-1)``
     adds cyclic (wraparound) points in longitude to one or several arrays, 
@@ -11,17 +11,17 @@ def addcyclic(*arr,**axiskwarg):
     where ``axis`` sets the dimension longitude is in (optional, default: right-most).
     """
     # get axis keyword argument (default: -1)
-    axis = axiskwarg.get('axis',-1)
+    axis = axiskwarg.get('axis', -1)
     # define function for a single grid array
     def _addcyclic(a):
-        aT = np.swapaxes(a,0,axis)
-        idx = np.append(np.arange(aT.shape[0]),0)
-        return np.swapaxes(aT[idx],axis,0)
+        aT = np.swapaxes(a, 0, axis)
+        idx = np.append(np.arange(aT.shape[0]), 0)
+        return np.swapaxes(aT[idx], axis, 0)
     # process array(s)
     if len(arr) == 1:
         return _addcyclic(arr[0])
     else:
-        return map(_addcyclic,arr)
+        return map(_addcyclic, arr)
 
 
 def regular_grid(spacing,lon0=-180,centerlon=0,addcyclic=False):
