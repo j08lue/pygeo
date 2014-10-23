@@ -49,9 +49,10 @@ def make_lon_continuous(lon):
     return c
 
 
-def spherical2cartesian(lon,lat):
+def spherical2cartesian(lon, lat):
     """Convert spherical to cartesian coordinates"""
-    rlon,rlat = np.map(np.radians,lon,lat)
+    rlon = np.radians(lon)
+    rlat = np.radians(lat)
     x = np.cos(rlat) * np.cos(rlon)
     y = np.cos(rlat) * np.sin(rlon)
     z = np.sin(rlat)
