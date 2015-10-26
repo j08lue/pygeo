@@ -76,7 +76,10 @@ def arclength(lon1, lat1, lon2, lat2):
     http://code.google.com/p/pyroms/
     """
     # convert decimal degrees to radians
-    lon1, lat1, lon2, lat2 = map(np.radians, [lon1, lat1, lon2, lat2])
+    lon1 = np.radians(lon1)
+    lat1 = np.radians(lat1)
+    lon2 = np.radians(lon2)
+    lat2 = np.radians(lat2)
 
     # compute arc length
     dlon = lon2 - lon1
@@ -119,7 +122,10 @@ def bearing(lon1, lat1, lon2, lat2):
     http://www.movable-type.co.uk/scripts/latlong.html
     """
     # convert decimal degrees to radians
-    lon1, lat1, lon2, lat2 = map(np.radians, [lon1, lat1, lon2, lat2])
+    lon1 = np.radians(lon1)
+    lat1 = np.radians(lat1)
+    lon2 = np.radians(lon2)
+    lat2 = np.radians(lat2)
     
     # compute bearing
     return np.degrees(
@@ -160,7 +166,10 @@ def waypoints(lon1, lat1, lon2, lat2, f=0.5, n=None):
     d = arclength(lon1, lat1, lon2, lat2)
 
     # convert decimal degrees to radians
-    lon1, lat1, lon2, lat2 = map(np.radians, [lon1, lat1, lon2, lat2])
+    lon1 = np.radians(lon1)
+    lat1 = np.radians(lat1)
+    lon2 = np.radians(lon2)
+    lat2 = np.radians(lat2)
     
     # compute waypoints
     a = np.sin((1.-f)*d) / np.sin(d)
@@ -170,7 +179,7 @@ def waypoints(lon1, lat1, lon2, lat2, f=0.5, n=None):
     z = a*np.sin(lat1)              + b*np.sin(lat2)
     lat = np.arctan2(z,np.sqrt(x**2+y**2.))
     lon = np.arctan2(y,x)
-    return map(np.degrees,[lon,lat])
+    return np.degrees(lon), np.degrees(lat)
 
 
 def waypoints_segments(lons, lats, f=None, n=10, returndist=False):
