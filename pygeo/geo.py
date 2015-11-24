@@ -212,7 +212,10 @@ def waypoints_segments(lons, lats, f=None, n=10, returndist=False):
     if f == None:
         f = np.linspace(0,1,n)
     else:
-        n = len(f)
+        try:
+            n = len(f)
+        except TypeError:
+            n = 1
 
     # get lengths and initialize
     ntot = (len(lons)-1)*n

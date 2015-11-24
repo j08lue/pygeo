@@ -110,7 +110,7 @@ def binary_search_grid(gridlon,gridlat,px,py,returndist=False):
             imid,jmid = centerpoints(Lo,Hi)
 
         # Find closest point from the remaining 2*2 square
-        dist = geo.haversine(gridlon[imid,jmid],gridlat[imid,jmid],x,y); print(dist,dist.argmin())
+        dist = geo.haversine(gridlon[imid,jmid],gridlat[imid,jmid],x,y);
         kmin = dist.argmin()
         if kmin == 0:
             ele = Lo

@@ -1,4 +1,5 @@
 """Tools for quickly finding a suitable projection for the region or coordinates specified"""
+from __future__ import print_function
 import numpy as np
 import scipy.io
 import urllib2

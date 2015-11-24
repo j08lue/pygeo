@@ -1,4 +1,5 @@
 """Regrid data from one grid to another. Useful e.g. for plotting data that is on an irregular grid"""
+from __future__ import print_function
 import numpy as np
 from mpl_toolkits.basemap import Basemap
 from scipy.interpolate import NearestNDInterpolator
