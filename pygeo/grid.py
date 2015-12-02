@@ -14,9 +14,8 @@ def addcyclic(*arr, **axiskwarg):
     axis = axiskwarg.get('axis', -1)
     # define function for a single grid array
     def _addcyclic(a):
-        aT = np.swapaxes(a, 0, axis)
-        idx = np.append(np.arange(aT.shape[0]), 0)
-        return np.swapaxes(aT[idx], axis, 0)
+        idx = np.append(np.arange(a.shape[axis]), 0)
+        return np.take(a, idx, axis=axis)
     # process array(s)
     if len(arr) == 1:
         return _addcyclic(arr[0])
