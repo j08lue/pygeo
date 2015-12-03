@@ -222,7 +222,7 @@ def waypoints_segments(lons, lats, f=None, n=10, returndist=False):
     waylons,waylats = np.zeros(ntot),np.zeros(ntot)
 
     # iterate through segments
-    for p in xrange(len(lons)-1):
+    for p in range(len(lons)-1):
         ia = p*n
         io = (p+1)*n
         
