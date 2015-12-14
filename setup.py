@@ -4,7 +4,7 @@ except ImportError:
     from distutils.core import setup
 
 setup(name = 'pygeo',
-      version = '0.1.0',
+      version = '0.2.0',
       author = 'Jonas Bluethgen',
       author_email = 'bluthgen@nbi.ku.dk',
       packages = ['pygeo'],
